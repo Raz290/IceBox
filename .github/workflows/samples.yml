@@ -20,7 +20,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.1
+        uses: microsoft/setup-msbuild@v1.0.2
       - name: Set Path
         run: cd $GITHUB_WORKSPACE
       # Assure that our Nuget packages are present
@@ -42,3 +42,11 @@ jobs:
         run: msbuild VisualStudio\IceBox.sln -t:Samples\SampleWPF -p:Configuration=Debug -p:Platform="x64" -m
       - name: Build Sample WPF Release|x64
         run: msbuild VisualStudio\IceBox.sln -t:Samples\SampleWPF -p:Configuration=Release -p:Platform="x64" -m
+      - name: Build Sample Graphics Debug|x64
+        run: msbuild VisualStudio\IceBox.sln -t:Samples\SampleGraphics -p:Configuration=Debug -p:Platform="x64" -m
+      - name: Build Sample Graphics Release|x64
+        run: msbuild VisualStudio\IceBox.sln -t:Samples\SampleGraphics -p:Configuration=Release -p:Platform="x64" -m
+      - name: Build Sample Threading Debug|x64
+        run: msbuild VisualStudio\IceBox.sln -t:Samples\SampleThreading -p:Configuration=Debug -p:Platform="x64" -m
+      - name: Build Sample Threading Release|x64
+        run: msbuild VisualStudio\IceBox.sln -t:Samples\SampleThreading -p:Configuration=Release -p:Platform="x64" -m

@@ -1,7 +1,7 @@
 #define _HAS_EXCEPTIONS 0
 
 #include <IBEngine/IBAllocator.h>
-#include <IBEngine/Platform/IBPlatform.h>
+#include <IBEngine/IBPlatform.h>
 #include <assert.h>
 
 bool hasDuplicates(void** allocations, uint32_t count)
@@ -144,4 +144,27 @@ int main()
 
     TestObject* t = IB::allocate<TestObject>(5);
     IB::deallocate(t);
+
+    TestObject const* tArray = IB::allocateArray<TestObject>(10, 5);
+    IB::deallocateArray(tArray, 10);
+
+    IB::BlockPool blockPool = IB::createBlockPool(sizeof(TestObject), alignof(TestObject));
+    void* testObject1 = IB::memoryAllocate(&blockPool);
+    void* testObject2 = IB::memoryAllocate(&blockPool);
+    assert(testObject1 != testObject2);
+
+    void *blocks[1024];
+    for (uint32_t i = 0; i < 1024; i++)
+    {
+        blocks[i] = IB::memoryAllocate(&blockPool);
+    }
+
+    IB::memoryFree(&blockPool, testObject1);
+    IB::memoryFree(&blockPool, testObject2);
+    for (uint32_t i = 0; i < 1024; i++)
+    {
+        IB::memoryFree(&blockPool, blocks[i]);
+    }
+
+    destroyBlockPool(&blockPool);
 }

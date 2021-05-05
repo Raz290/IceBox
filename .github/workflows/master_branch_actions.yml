@@ -20,10 +20,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.0.1
+        uses: microsoft/setup-msbuild@v1.0.2
       - name: Set Path
         run: cd $GITHUB_WORKSPACE
       - name: Build IBEngine Debug|x64
         run: msbuild VisualStudio\IceBox.sln -t:IBEngine -p:Configuration=Debug -p:Platform="x64" -m
       - name: Build IBEngine Release|x64
         run: msbuild VisualStudio\IceBox.sln -t:IBEngine -p:Configuration=Release -p:Platform="x64" -m
+      - name: Build Content Processor Debug|x64
+        run: msbuild VisualStudio\IceBox.sln -t:ContentProcessor -p:Configuration=Debug -p:Platform="x64" -m
+      - name: Build Content Processor Release|x64
+        run: msbuild VisualStudio\IceBox.sln -t:ContentProcessor -p:Configuration=Release -p:Platform="x64" -m
